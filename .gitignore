@@ -24,3 +24,5 @@ $RECYCLE.BIN/
 Platformer/Platformer-VSCode/out/
 /TempleTreasure/out
 /TempleTreasure/.idea
+*.map
+*.d.ts
