@@ -26,3 +26,4 @@ Platformer/Platformer-VSCode/out/
 /TempleTreasure/.idea
 *.map
 *.d.ts
+TempleTreasure/ts_lib/testGame.js
