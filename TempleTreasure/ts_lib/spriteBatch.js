@@ -25,6 +25,9 @@ export class SpriteBatch {
         this.ctx.fillStyle = color;
         this.ctx.fillText(value, position.X, position.Y);
     }
+    DrawButton(button) {
+        button.draw(this.ctx);
+    }
     Begin() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
