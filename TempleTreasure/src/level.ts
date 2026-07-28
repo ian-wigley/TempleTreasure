@@ -48,6 +48,7 @@ export class Level {
 
     private LoadTiles(path: string): void {
 
+        console.log(path);
         let lines: any = [];
         let levelBytes: string;
         let _this = this;
@@ -55,6 +56,8 @@ export class Level {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', path, true);
         xhr.responseType = 'text';
+
+
 
         xhr.onload = function () {
             levelBytes = this.response;
