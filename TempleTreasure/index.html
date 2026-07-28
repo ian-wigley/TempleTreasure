@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platformer Game</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+</head>
+
+<body>
+<div id="container">
+    <canvas id="canvas" width="1280" height="720"></canvas>
+</div>
+
+<img id="mainMenu" src="Content/images/Backgrounds/Main_menu.webp" alt="" />
+<img id="startButton" src="Content/images/Buttons/Start_Button.webp" alt="" />
+<img id="optionsButton" src="Content/images/Buttons/Options_Button.webp" alt="" />
+
+<img id="overlayDied" src="Content/images/Overlays/you_died.webp" alt="" />
+<img id="overlayLose" src="Content/images/Overlays/you_lose.webp" alt="" />
+<img id="overlayWin" src="Content/images/Overlays/you_win.webp" alt="" />
+
+<img id="gem" src="Content/images/Sprites/Gem.webp" alt="" />
+
+<img id="playerCelebrateAnim" src="Content/images/Sprites/Player/Celebrate.webp" alt="" />
+<img id="playerDieAnim" src="Content/images/Sprites/Player/Die.webp" alt="" />
+<img id="playerIdleAnim" src="Content/images/Sprites/Player/Idle.webp" alt="" />
+<img id="playerJumpAnim" src="Content/images/Sprites/Player/Jump.webp" alt="" />
+<img id="playerRunAnim" src="Content/images/Sprites/Player/Run.webp" alt="" />
+
+<img id="Layer0_0" src="Content/images/Backgrounds/Layer0_0.webp" alt="" />
+<img id="Layer0_1" src="Content/images/Backgrounds/Layer0_1.webp" alt="" />
+<img id="Layer0_2" src="Content/images/Backgrounds/Layer0_2.webp" alt="" />
+<img id="Layer1_0" src="Content/images/Backgrounds/Layer1_0.webp" alt="" />
+<img id="Layer1_1" src="Content/images/Backgrounds/Layer1_1.webp" alt="" />
+<img id="Layer1_2" src="Content/images/Backgrounds/Layer1_2.webp" alt="" />
+<img id="Layer2_0" src="Content/images/Backgrounds/Layer2_0.webp" alt="" />
+<img id="Layer2_1" src="Content/images/Backgrounds/Layer2_1.webp" alt="" />
+<img id="Layer2_2" src="Content/images/Backgrounds/Layer2_2.webp" alt="" />
+
+<img id="BlockA0" src="Content/images/Tiles/BlockA0.webp" alt="" />
+<img id="BlockA1" src="Content/images/Tiles/BlockA1.webp" alt="" />
+<img id="BlockA2" src="Content/images/Tiles/BlockA2.webp" alt="" />
+<img id="BlockA3" src="Content/images/Tiles/BlockA3.webp" alt="" />
+<img id="BlockA4" src="Content/images/Tiles/BlockA4.webp" alt="" />
+<img id="BlockA5" src="Content/images/Tiles/BlockA5.webp" alt="" />
+<img id="BlockA6" src="Content/images/Tiles/BlockA6.webp" alt="" />
+<img id="BlockB0" src="Content/images/Tiles/BlockB0.webp" alt="" />
+<img id="BlockB1" src="Content/images/Tiles/BlockB1.webp" alt="" />
+<img id="Exit" src="Content/images/Tiles/Exit.webp" alt="" />
+<img id="Platform" src="Content/images/Tiles/Platform.png" alt="" />
+
+<img id="MonsterADie" src="Content/images/Sprites/MonsterA/Die.webp" alt="" />
+<img id="MonsterAIdle" src="Content/images/Sprites/MonsterA/Idle.webp" alt="" />
+<img id="MonsterARun" src="Content/images/Sprites/MonsterA/Run.webp" alt="" />
+
+<img id="MonsterBDie" src="Content/images/Sprites/MonsterB/Die.webp" alt="" />
+<img id="MonsterBIdle" src="Content/images/Sprites/MonsterB/Idle.webp" alt="" />
+<img id="MonsterBRun" src="Content/images/Sprites/MonsterB/Run.webp" alt="" />
+
+<img id="MonsterCDie" src="Content/images/Sprites/MonsterC/Die.webp" alt="" />
+<img id="MonsterCIdle" src="Content/images/Sprites/MonsterC/Idle.webp" alt="" />
+<img id="MonsterCRun" src="Content/images/Sprites/MonsterC/Run.webp" alt="" />
+
+<img id="MonsterDDie" src="Content/images/Sprites/MonsterD/Die.webp" alt="" />
+<img id="MonsterDIdle" src="Content/images/Sprites/MonsterD/Idle.webp" alt="" />
+<img id="MonsterDRun" src="Content/images/Sprites/MonsterD/Run.webp" alt="" />
+
+
+<audio id="Music" src="Content/sounds/Music.opus"></audio>
+<audio id="ExitReached" src="Content/sounds/ExitReached.opus"></audio>
+<audio id="GemCollected" src="Content/sounds/GemCollected.opus"></audio>
+<audio id="MonsterKilled" src="Content/sounds/MonsterKilled.opus"></audio>
+<audio id="PlayerFall" src="Content/sounds/PlayerFall.opus"></audio>
+<audio id="PlayerJump" src="Content/sounds/PlayerJump.opus"></audio>
+<audio id="PlayerKilled" src="Content/sounds/PlayerKilled.opus"></audio>
+<audio id="PowerUp" src="Content/sounds/PowerUp.opus"></audio>
+
+<script type="module">
+    import { PlatformerGame } from "./out/platformergame.js"
+    let game = new PlatformerGame();
+    game.RunGame(true);
+    game.Tick();
+</script>
+</body>
+
+</html>
