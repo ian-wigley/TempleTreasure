@@ -9,6 +9,7 @@ import { GameTime } from "../ts_lib/gameTime.js";
 import { Rectangle } from "../ts_lib/rectangle.js";
 import { Controls } from "../ts_lib/controls.js";
 import {RectangleExtensions} from "../ts_lib/rectangleextensions.js";
+import { SpriteBatch } from "../ts_lib/spriteBatch.js";
 
 export enum SpriteEffects {
     None = 0,
@@ -27,7 +28,7 @@ export class Player {
     private killedSound: HTMLAudioElement;
     private jumpSound: HTMLAudioElement;
     private fallSound: HTMLAudioElement;
-    private level: Level;
+    private readonly level: Level;
     private isAlive: boolean = true;
     private position: Vector2;
     private previousBottom: number = 0;
@@ -41,8 +42,8 @@ export class Player {
     private static GravityAcceleration: number = 3500.0;
     private static MaxFallSpeed: number = 600.0;
     private static JumpControlPower: number = 0.14;
-    private static MoveStickScale: number = 1.0;
-    private static JumpButton;
+    // private static MoveStickScale: number = 1.0;
+    // private static JumpButton;
     private isOnGround: boolean = true;
     private movement: number = 0;
     private isJumping: boolean = false;
@@ -60,11 +61,11 @@ export class Player {
     }
 
     public LoadContent(): void {
-        this.idleAnimation = new Animation(<HTMLImageElement>document.getElementById("playerIdle"), 0.1, true);
-        this.runAnimation = new Animation(<HTMLImageElement>document.getElementById("playerRun"), 0.1, true);
-        this.jumpAnimation = new Animation(<HTMLImageElement>document.getElementById("playerJump"), 0.1, true);
-        this.celebrateAnimation = new Animation(<HTMLImageElement>document.getElementById("playerCelebrate"), 0.1, true);
-        this.dieAnimation = new Animation(<HTMLImageElement>document.getElementById("playerDie"), 0.1, true);
+        this.idleAnimation = new Animation(<HTMLImageElement>document.getElementById("playerIdleAnim"), 0.1, true);
+        this.runAnimation = new Animation(<HTMLImageElement>document.getElementById("playerRunAnim"), 0.1, true);
+        this.jumpAnimation = new Animation(<HTMLImageElement>document.getElementById("playerJumpAnim"), 0.1, true);
+        this.celebrateAnimation = new Animation(<HTMLImageElement>document.getElementById("playerCelebrateAnim"), 0.1, true);
+        this.dieAnimation = new Animation(<HTMLImageElement>document.getElementById("playerDieAnim"), 0.1, true);
         let width: number = Math.round((this.idleAnimation.FrameWidth * 0.4));
         let left: number = Math.round((this.idleAnimation.FrameWidth - width) / 2);
         let height: number = Math.round(this.idleAnimation.FrameWidth * 0.8);
@@ -89,8 +90,7 @@ export class Player {
         if (this.IsAlive && this.IsOnGround) {
             if (Math.abs(this.Velocity.X) - 0.02 > 0) {
                 this.sprite.PlayAnimation(this.runAnimation);
-            }
-            else {
+            } else {
                 this.sprite.PlayAnimation(this.idleAnimation);
             }
         }
@@ -109,9 +109,9 @@ export class Player {
             this.movement = 1.0;
         }
         this.isJumping = this.m_ctrl.lcontrolPressed;
-        if (this.isJumping) {
-            let stopHere = true;
-        }
+        // if (this.isJumping) {
+        //     let stopHere = true;
+        // }
     }
 
     public ApplyPhysics(gameTime: GameTime): void {
@@ -122,8 +122,7 @@ export class Player {
         this.velocity.Y = this.DoJump(this.velocity.Y, gameTime);
         if (this.IsOnGround) {
             this.velocity.X *= Player.GroundDragFactor;
-        }
-        else {
+        } else {
             this.velocity.X *= Player.AirDragFactor;
         }
         this.velocity.X = MathHelper.Clamp(this.velocity.X, -Player.MaxMoveSpeed, Player.MaxMoveSpeed);
@@ -148,17 +147,16 @@ export class Player {
             }
             if (0.0 < this.jumpTime && this.jumpTime <= Player.MaxJumpTime) {
                 velocityY = Player.JumpLaunchVelocity * (1.0 - Math.pow(this.jumpTime / Player.MaxJumpTime, Player.JumpControlPower));
-            }
-            else {
+            } else {
                 this.jumpTime = 0.0;
             }
-        }
-        else {
+        } else {
             this.jumpTime = 0.0;
         }
         this.wasJumping = this.isJumping;
         return velocityY;
     }
+
     private HandleCollisions(): void {
         let bounds: Rectangle = this.BoundingRectangle;
         let leftTile: number = Math.floor(bounds.Left / Tile.Width);
@@ -182,8 +180,7 @@ export class Player {
                                 this.Position = new Vector2(this.Position.X, this.Position.Y + depth.Y);
                                 bounds = this.BoundingRectangle;
                             }
-                        }
-                        else if (collision == TileCollision.Impassable) {
+                        } else if (collision == TileCollision.Impassable) {
                             this.Position = new Vector2(this.Position.X + depth.X, this.Position.Y);
                             bounds = this.BoundingRectangle;
                         }
@@ -198,19 +195,18 @@ export class Player {
         this.isAlive = false;
         if (killedBy != null) {
             this.killedSound.play();
-        }
-        else {
+        } else {
             this.fallSound.play();
         }
         this.sprite.PlayAnimation(this.dieAnimation);
-        this.lives --;
+        this.lives--;
     }
 
     public OnReachedExit(): void {
         this.sprite.PlayAnimation(this.celebrateAnimation);
     }
 
-    public Draw(gameTime: GameTime, spriteBatch): void {
+    public Draw(gameTime: GameTime, spriteBatch: SpriteBatch): void {
         if (this.Velocity.X > 0) {
             this.flip = SpriteEffects.FlipHorizontally;
         }
