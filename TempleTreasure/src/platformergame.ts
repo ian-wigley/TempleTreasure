@@ -16,11 +16,15 @@ export enum GameState {
 
 export class PlatformerGame extends Game {
     private graphics: any;
+    private optionButton: HTMLButtonElement | undefined;
+    private BackBufferWidth: number = 1280;
+    private BackBufferHeight: number = 720;
+    
     private hudFont = "14px Arial";
     private mainMenuImage: HTMLImageElement | undefined;
     private startButtonImage: HTMLImageElement | undefined;
 
-    private optionButton: HTMLButtonElement | undefined;
+
     private startButton: TexturedButton | undefined;
 
     private winOverlay: HTMLImageElement | undefined;
@@ -33,8 +37,6 @@ export class PlatformerGame extends Game {
     private wasContinuePressed: boolean = false;
     private WarningTime: TimeSpan = new TimeSpan(0);
     private TargetFrameRate: number = 60;
-    private BackBufferWidth: number = 1280;
-    private BackBufferHeight: number = 720;
     private keyPressed: Controls = new Controls();
     private gameState: GameState = GameState.DisplayMenu;
     private readonly m_gameTime: GameTime;
@@ -50,18 +52,13 @@ export class PlatformerGame extends Game {
         this.TargetElapsedTime.SetTicks(this.TargetElapsedTime.TicksPerSecond / this.TargetFrameRate);
         this.m_gameTime = new GameTime();
         this.LoadMenuContent();
-        // this.LoadContent();
         this.ConfigureMenu();
     }
 
     protected LoadContent(): void {
-        // this.spriteBatch = new SpriteBatch();
-        // this.AddHitListener();
-        // this.mainMenu = <HTMLImageElement>document.getElementById("MainMenu");
         this.winOverlay = <HTMLImageElement>document.getElementById("overlayWin");
         this.loseOverlay = <HTMLImageElement>document.getElementById("overlayLose");
         this.diedOverlay = <HTMLImageElement>document.getElementById("overlayDied");
-        //this.music = <HTMLAudioElement>document.getElementById("Music");
         this.LoadNextLevel();
     }
 
@@ -80,21 +77,12 @@ export class PlatformerGame extends Game {
             403,
             96,
             this.startButtonImage.src.toString(),
-//            "Content/images/Buttons/Start_Button.png",
             () => {
-                // this.LoadContent();
-                // //this.music = <HTMLAudioElement>document.getElementById("Music");
-
-                this.music.play().then(() => {
+                 this.music.play().then(() => {
                     this.LoadContent();
                     // Todo reset all the game state variables!
-                    while(!this.level.Loaded){
-                    // while(this.level.Player==undefined){
-
-                    }
-                    this.level.Player.Lives = 3;
-                    console.log("Playing");
-                    this.gameState = GameState.GameOn;
+                     // this.level.Player.Lives = 3;
+                          this.gameState = GameState.GameOn;
                 }).catch(err => console.error("Play failed:", err));
 
             }
@@ -209,7 +197,7 @@ export class PlatformerGame extends Game {
         if (this.level) {
             tempScore = this.level.Score;
         }
-        this.level = new Level(null, levelPath, this.keyPressed, tempScore);
+        this.level = new Level(levelPath, this.keyPressed, tempScore);
     }
 
     private ReloadCurrentLevel(): void {
