@@ -13,26 +13,26 @@ import { Player } from "./player.js";
 
 export class Level {
     private tiles!: Tile[][];
-    private layers: HTMLImageElement[];
+    private readonly layers: HTMLImageElement[];
     private static EntityLayer: number = 2;
     private score: number = 0;
-    private m_ctrl: Controls;
+    private readonly ctrl: Controls;
     private player!: Player;
     private gems = [];
     private enemies = [];
     private start!: Vector2;
     private static InvalidPosition: Point = new Point(-1, -1);
     private exit: Point = Level.InvalidPosition;
-    private loaded: boolean = false;
+    private loaded: boolean;// = false;
     private reachedExit!: boolean;
     private timeRemaining: TimeSpan = new TimeSpan(0);
     private static PointsPerSecond: number = 5;
     private content!: any;
     private exitReachedSound: HTMLAudioElement;
 
-    constructor(serviceProvider: any, path: string, ctrl: Controls, score?: number) {
+    constructor(path: string, ctrl: Controls, score?: number) {
         this.timeRemaining = this.timeRemaining.FromMinutes(2.0);
-        this.m_ctrl = ctrl;
+        this.ctrl = ctrl;
         if (score) {
             this.score = score;
         }
@@ -57,15 +57,13 @@ export class Level {
         xhr.open('GET', path, true);
         xhr.responseType = 'text';
 
-
-
         xhr.onload = function () {
             levelBytes = this.response;
         };
         xhr.onloadend = function () {
             _this.loaded = true;
-            let delimeter = (navigator.platform == "Win32") ? "\r\n" : "\n" ;
-            let line = levelBytes.split(delimeter);
+            let delimiter = /\r\n|\n|\r/;
+            let line = levelBytes.split(delimiter);
             lines.push(line);
             _this.tiles = [];
             for (let y: number = 0; y < _this.Width; ++y) {
@@ -83,6 +81,9 @@ export class Level {
             if (_this.exit == Level.InvalidPosition) {
                 console.log("A level must have an exit.");
             }
+        };
+        xhr.onerror = function () {
+            console.log("Failed to load: ", path);
         };
         xhr.send();
     }
@@ -132,7 +133,7 @@ export class Level {
             console.log("A level may only have one starting point.");
         }
         this.start = RectangleExtensions.GetBottomCenter(this.GetBounds(x, y));
-        this.player = new Player(this, this.start, this.m_ctrl);
+        this.player = new Player(this, this.start, this.ctrl);
         return new Tile(null, TileCollision.Passable);
     }
 
