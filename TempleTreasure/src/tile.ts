@@ -1,4 +1,4 @@
-import { Vector2 } from "../ts_lib/vector2.js";
+import {Vector2} from "../out/lib/game_library.js"
 
 export enum TileCollision {
     Passable = 0,
