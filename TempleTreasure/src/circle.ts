@@ -1,6 +1,5 @@
-import { Vector2 } from "../ts_lib/vector2.js";
-import { Rectangle } from "../ts_lib/rectangle.js";
-import { MathHelper } from "./mathhelper.js";
+import {Rectangle, Vector2} from "../out/lib/game_library.js"
+import {MathHelper} from "./mathhelper.js";
 
 export class Circle {
     public Center: Vector2;
