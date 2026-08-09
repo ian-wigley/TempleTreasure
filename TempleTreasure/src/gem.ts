@@ -1,11 +1,8 @@
-import { Level } from "./level.js";
-import { Tile } from "./tile.js";
-import { Circle } from "./circle.js";
-import { Vector2 } from "../ts_lib/vector2.js";
-import { Player } from "./player.js";
-import { Color } from "../ts_lib/color.js";
-import { GameTime } from "../ts_lib/gameTime.js";
-import { SpriteBatch } from "../ts_lib/spriteBatch.js";
+import {Color, GameTime, SpriteBatch, Vector2} from "../out/lib/game_library.js"
+import {Level} from "./level.js";
+import {Tile} from "./tile.js";
+import {Circle} from "./circle.js";
+import {Player} from "./player.js";
 
 export class Gem {
     private texture!: HTMLImageElement;
