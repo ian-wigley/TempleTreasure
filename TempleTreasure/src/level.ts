@@ -1,15 +1,17 @@
-import { Rectangle } from "../ts_lib/rectangle.js";
-import { Tile, TileCollision } from "./tile.js";
-import { Controls } from "../ts_lib/controls.js";
-import { GameTime } from "../ts_lib/gameTime.js";
-import { Point } from "../ts_lib/point.js";
-import { RectangleExtensions } from "../ts_lib/rectangleextensions.js";
-import { SpriteBatch } from "../ts_lib/spriteBatch.js";
-import { TimeSpan } from "../ts_lib/timeSpan.js";
-import { Vector2 } from "../ts_lib/vector2.js";
-import { Enemy } from "./enemy.js";
-import { Gem } from "./gem.js";
-import { Player } from "./player.js";
+import {
+    Controls,
+    GameTime,
+    Point,
+    Rectangle,
+    RectangleExtensions,
+    SpriteBatch,
+    TimeSpan,
+    Vector2
+} from "../out/lib/game_library.js"
+import {Tile, TileCollision} from "./tile.js";
+import {Enemy} from "./enemy.js";
+import {Gem} from "./gem.js";
+import {Player} from "./player.js";
 
 export class Level {
     private tiles!: Tile[][];
@@ -182,14 +184,12 @@ export class Level {
     public Update(gameTime: GameTime): void {
         if (!this.Player.IsAlive || this.TimeRemaining.Ticks == 0) {
             this.Player.ApplyPhysics(gameTime);
-        }
-        else if (this.ReachedExit) {
+        } else if (this.ReachedExit) {
             let seconds: number = Math.round(gameTime.ElapsedGameTime.TotalSeconds * 100.0);
             seconds = Math.min(seconds, Math.ceil(this.TimeRemaining.TotalSeconds));
             this.timeRemaining = this.timeRemaining.Subtract(this.timeRemaining.FromSeconds(seconds));
             this.score += seconds * Level.PointsPerSecond;
-        }
-        else {
+        } else {
             this.timeRemaining = this.timeRemaining.Subtract(gameTime.ElapsedGameTime);
 
             this.Player.Update(gameTime);
@@ -260,9 +260,13 @@ export class Level {
                 spriteBatch.Draw(this.layers[i], 0, 0);
             }
             this.DrawTiles(spriteBatch);
-            this.gems.forEach(function (gem) { gem.Draw(gameTime, spriteBatch); });
+            this.gems.forEach(function (gem) {
+                gem.Draw(gameTime, spriteBatch);
+            });
 
-            this.enemies.forEach(function (enemy) { enemy.Draw(gameTime, spriteBatch); });
+            this.enemies.forEach(function (enemy) {
+                enemy.Draw(gameTime, spriteBatch);
+            });
             for (let i: number = Level.EntityLayer + 1; i < this.layers.length; ++i) {
                 spriteBatch.Draw(this.layers[i], 0, 0);
             }
@@ -285,18 +289,23 @@ export class Level {
     public get Score(): number {
         return this.score;
     }
+
     public get ReachedExit(): boolean {
         return this.reachedExit;
     }
+
     public get Player(): Player {
         return this.player;
     }
+
     public get TimeRemaining(): TimeSpan {
         return this.timeRemaining;
     }
+
     public get Content() {
         return this.content;
     }
+
     public get Loaded(): boolean {
         return this.loaded;
     }
