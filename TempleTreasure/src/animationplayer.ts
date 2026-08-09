@@ -1,9 +1,6 @@
-import { GameTime } from "../ts_lib/gameTime.js";
-import { Rectangle } from "../ts_lib/rectangle.js";
-import { SpriteBatch } from "../ts_lib/spriteBatch.js";
-import { Vector2 } from "../ts_lib/vector2.js";
-import { Animation } from "./animation.js";
-import { SpriteEffects } from "./player.js";
+import {GameTime, Rectangle, SpriteBatch, Vector2} from "../out/lib/game_library.js"
+import {Animation} from "./animation.js";
+import {SpriteEffects} from "./player.js";
 
 export class AnimationPlayer {
 
@@ -40,16 +37,14 @@ export class AnimationPlayer {
             this.time -= this.Animation.FrameTime;
             if (this.Animation.IsLooping) {
                 this.frameIndex = (this.frameIndex + 1) % this.Animation.FrameCount;
-            }
-            else {
+            } else {
                 this.frameIndex = Math.min(this.frameIndex + 1, this.Animation.FrameCount - 1);
             }
         }
         let source: Rectangle = new Rectangle(this.FrameIndex * this.Animation.Texture.height, 0, this.Animation.Texture.height, this.Animation.Texture.height);
         if (spriteEffects) {
             spriteBatch.Draw(this.Animation.TextureCopy, source.X, source.Y, source.Width, source.Height, position.X - this.Origin.X, position.Y - this.Origin.Y, 96, 96);
-        }
-        else {
+        } else {
             spriteBatch.Draw(this.Animation.Texture, source.X, source.Y, source.Width, source.Height, position.X - this.Origin.X, position.Y - this.Origin.Y, 96, 96);
         }
     }
