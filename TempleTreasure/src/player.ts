@@ -1,15 +1,10 @@
-import { MathHelper } from "./mathhelper.js";
-import { Vector2 } from "../ts_lib/vector2.js";
-import { AnimationPlayer } from "./animationplayer.js";
-import { Animation } from "./animation.js";
-import { Enemy } from "./enemy.js";
-import { Level } from "./level.js";
-import { Tile, TileCollision } from "./tile.js";
-import { GameTime } from "../ts_lib/gameTime.js";
-import { Rectangle } from "../ts_lib/rectangle.js";
-import { Controls } from "../ts_lib/controls.js";
-import {RectangleExtensions} from "../ts_lib/rectangleextensions.js";
-import { SpriteBatch } from "../ts_lib/spriteBatch.js";
+import {Controls, GameTime, Rectangle, RectangleExtensions, SpriteBatch, Vector2} from "../out/lib/game_library.js"
+import {MathHelper} from "./mathhelper.js";
+import {AnimationPlayer} from "./animationplayer.js";
+import {Animation} from "./animation.js";
+import {Enemy} from "./enemy.js";
+import {Level} from "./level.js";
+import {Tile, TileCollision} from "./tile.js";
 
 export enum SpriteEffects {
     None = 0,
@@ -209,8 +204,7 @@ export class Player {
     public Draw(gameTime: GameTime, spriteBatch: SpriteBatch): void {
         if (this.Velocity.X > 0) {
             this.flip = SpriteEffects.FlipHorizontally;
-        }
-        else if (this.Velocity.X < 0) {
+        } else if (this.Velocity.X < 0) {
             this.flip = SpriteEffects.None;
         }
         this.sprite.Draw(gameTime, spriteBatch, this.Position, this.flip);
@@ -225,27 +219,35 @@ export class Player {
     public get Level(): Level {
         return this.level;
     }
+
     public get IsAlive(): boolean {
         return this.isAlive;
     }
+
     public get Position(): Vector2 {
         return this.position;
     }
+
     public set Position(value: Vector2) {
         this.position = value;
     }
+
     public get Velocity(): Vector2 {
         return this.velocity;
     }
+
     public set Velocity(value: Vector2) {
         this.velocity = value;
     }
+
     public get IsOnGround(): boolean {
         return this.isOnGround;
     }
+
     public set Lives(value: number) {
         this.lives = value;
     }
+
     public get Lives(): number {
         return this.lives;
     }
