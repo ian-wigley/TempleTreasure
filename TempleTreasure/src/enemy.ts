@@ -1,13 +1,9 @@
-import { Vector2 } from "../ts_lib/vector2.js";
-import { AnimationPlayer } from "./animationplayer.js";
-import { Animation } from "./animation.js";
-import { Level } from "./level.js";
-import { SpriteEffects } from "./player.js";
-import { Tile, TileCollision } from "./tile.js";
-import { Rectangle } from "../ts_lib/rectangle.js";
-import { GameTime } from "../ts_lib/gameTime.js";
-import { SpriteBatch } from "../ts_lib/spriteBatch.js";
-import { TimeSpan } from "../ts_lib/timeSpan.js";
+import {GameTime, Rectangle, SpriteBatch, TimeSpan, Vector2} from "../out/lib/game_library.js"
+import {AnimationPlayer} from "./animationplayer.js";
+import {Animation} from "./animation.js";
+import {Level} from "./level.js";
+import {SpriteEffects} from "./player.js";
+import {Tile, TileCollision} from "./tile.js";
 
 export enum FaceDirection {
     Left = -1,
@@ -55,12 +51,10 @@ export class Enemy {
             if (this.waitTime <= 0.0) {
                 this.direction = <FaceDirection>(-<number>this.direction);
             }
-        }
-        else {
+        } else {
             if (this.Level.GetCollision(tileX + <number>this.direction, tileY - 1) == TileCollision.Impassable || this.Level.GetCollision(tileX + <number>this.direction, tileY) == TileCollision.Passable) {
                 this.waitTime = Enemy.MaxWaitTime;
-            }
-            else {
+            } else {
                 let velocity: Vector2 = new Vector2(<number>this.direction * Enemy.MoveSpeed * elapsed, 0.0);
                 this.position = new Vector2(this.position.X + velocity.X, this.position.Y + velocity.Y);
             }
@@ -71,8 +65,7 @@ export class Enemy {
         let t = new TimeSpan(0);
         if (!this.Level.Player.IsAlive || this.Level.ReachedExit || this.Level.TimeRemaining == t /*TimeSpan.Zero*/ || this.waitTime > 0) {
             this.sprite.PlayAnimation(this.idleAnimation);
-        }
-        else {
+        } else {
             this.sprite.PlayAnimation(this.runAnimation);
         }
         let flip = this.direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
