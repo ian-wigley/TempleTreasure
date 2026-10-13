@@ -26,6 +26,8 @@ export class TempleTreasure extends Game {
     private hudFont = "14px Arial";
     private mainMenuImage: HTMLImageElement | undefined;
     private startButtonImage: HTMLImageElement | undefined;
+    private infoButtonImage: HTMLImageElement | undefined;
+    private infoButton: TexturedButton | undefined;
     private startButton: TexturedButton | undefined;
     private winOverlay: HTMLImageElement | undefined;
     private loseOverlay: HTMLImageElement | undefined;
@@ -61,10 +63,22 @@ export class TempleTreasure extends Game {
         this.AddHitListener();
         this.mainMenuImage = <HTMLImageElement>document.getElementById("mainMenu");
         this.startButtonImage = <HTMLImageElement>document.getElementById("startButton");
+        this.infoButtonImage = <HTMLImageElement>document.getElementById("informationButton");
         this.music = <HTMLAudioElement>document.getElementById("Music");
     }
 
     private ConfigureMenu(): void {
+
+        this.infoButton = new TexturedButton(
+            440,
+            400,
+            403,
+            96,
+            this.infoButtonImage.src.toString(),
+            () => {this.infoButtonImage;}
+        );
+
+
         this.startButton = new TexturedButton(
             440,
             500,
@@ -78,7 +92,6 @@ export class TempleTreasure extends Game {
                     // this.level.Player.Lives = 3;
                     this.gameState = GameState.GameOn;
                 }).catch(err => console.error("Play failed:", err));
-
             }
         );
     }
@@ -278,6 +291,7 @@ export class TempleTreasure extends Game {
 
     private DrawMenu(): void {
         this.spriteBatch.Draw(this.mainMenuImage, 0, 0);
+        this.spriteBatch.DrawButton(this.infoButton);
         this.spriteBatch.DrawButton(this.startButton);
     }
 
