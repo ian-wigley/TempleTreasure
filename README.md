@@ -7,6 +7,6 @@ This conversion was brought on by wanting to test the C# to TypeScript plugin â†
 I thought this would be a quick project, however I ended up porting a lot of the XNA framework to TypeScript at the same time !
 The main game code has been left as original as possible, by tweaking the underlying XNA framework to run on the HTML canvas.
 
-A playable demo can be found at : http://ianwigley.co.uk/Platformer/index.html
+A playable demo can be found at : http://ianwigley.co.uk/TempleTreasure/index.html
 
 ![TempleTreasure.jpg](TempleTreasure.jpg)
