@@ -8,7 +8,7 @@ import {
     TimeSpan,
     Vector2
 } from "../out/lib/game_library.js"
-//import {Color, Controls, GameTime, SpriteBatch, TexturedButton, TimeSpan, Vector2} from "../out/lib/game_library.min.js"
+
 import {Level} from "./level.js"
 
 export enum GameState {
@@ -18,11 +18,6 @@ export enum GameState {
 }
 
 export class TempleTreasure extends Game {
-    private graphics: any;
-    private optionButton: HTMLButtonElement | undefined;
-    private BackBufferWidth: number = 1280;
-    private BackBufferHeight: number = 720;
-
     private hudFont = "14px Arial";
     private mainMenuImage: HTMLImageElement | undefined;
     private startButtonImage: HTMLImageElement | undefined;
@@ -32,6 +27,7 @@ export class TempleTreasure extends Game {
     private winOverlay: HTMLImageElement | undefined;
     private loseOverlay: HTMLImageElement | undefined;
     private diedOverlay: HTMLImageElement | undefined;
+    private infoOverlay: HTMLImageElement | undefined;
     private music: HTMLAudioElement | undefined;
     private levelIndex: number = -1;
     private level: Level | undefined;
@@ -40,6 +36,7 @@ export class TempleTreasure extends Game {
     private TargetFrameRate: number = 60;
     private keyPressed: any = new Controls();
     private gameState: GameState = GameState.DisplayMenu;
+    private displayGameInformation: boolean = false;
 
     constructor() {
         super();
@@ -68,20 +65,21 @@ export class TempleTreasure extends Game {
     }
 
     private ConfigureMenu(): void {
-
         this.infoButton = new TexturedButton(
             440,
-            400,
+            500,
             403,
             96,
             this.infoButtonImage.src.toString(),
-            () => {this.infoButtonImage;}
+            () => {
+                this.infoOverlay = <HTMLImageElement>document.getElementById("overlayInfo");
+                this.displayGameInformation = true;
+            }
         );
-
 
         this.startButton = new TexturedButton(
             440,
-            500,
+            600,
             403,
             96,
             this.startButtonImage.src.toString(),
@@ -108,6 +106,10 @@ export class TempleTreasure extends Game {
         });
 
         window.addEventListener("click", (e) => {
+            this.infoButton.click(
+                e.clientX,
+                e.clientY
+            );
             this.startButton.click(
                 e.clientX,
                 e.clientY
@@ -180,7 +182,7 @@ export class TempleTreasure extends Game {
     }
 
     private HandleInput(): void {
-        let continuePressed: boolean = this.keyPressed.spacePressed;
+        let continuePressed: boolean = this.keyPressed.lcontrolPressed;
         if (!this.wasContinuePressed && continuePressed) {
             if (!this.level.Player.IsAlive) {
                 this.level.StartNewLife();
@@ -188,7 +190,7 @@ export class TempleTreasure extends Game {
             if (this.level.ReachedExit) {
                 this.LoadNextLevel();
             } else {
-                this.ReloadCurrentLevel();
+                // this.ReloadCurrentLevel();
             }
         }
         //}
@@ -291,7 +293,12 @@ export class TempleTreasure extends Game {
 
     private DrawMenu(): void {
         this.spriteBatch.Draw(this.mainMenuImage, 0, 0);
-        this.spriteBatch.DrawButton(this.infoButton);
+        if(!this.displayGameInformation) {
+            this.spriteBatch.DrawButton(this.infoButton);
+        }
+        else{
+            this.spriteBatch.Draw(this.infoOverlay, 450, 400);
+        }
         this.spriteBatch.DrawButton(this.startButton);
     }
 
